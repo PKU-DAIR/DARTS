@@ -1,0 +1,53 @@
+hydra:
+  searchpath:
+    - file://verl/trainer/config
+
+defaults:
+  - ppo_trainer
+  - _self_
+
+# config for the rollout (only for resource isolation)
+rollout:
+  # Number of nodes used in the rollout
+  nnodes: 1
+  # Number of GPUs per node
+  n_gpus_per_node: 8
+
+algorithm:
+  trainer_name: basic
+  redundancy: 16
+  yita: 1.0
+  filter_groups:
+    _target_: verl.trainer.config.FilterGroupsConfig
+    enable: False # We try to avoid forgetting to set enable
+    metric: null # acc / score / seq_reward / seq_final_reward / ...
+    max_num_gen_batches: 0 # Non-positive values mean no upper limit
+
+
+working_dir: ./
+excludes: ["/.git/"]
+env_vars:
+  TORCH_NCCL_AVOID_RECORD_STREAMS: "1"
+  VLLM_USE_V1: "1"
+
+data:
+  gen_batch_size: ${data.train_batch_size}
+
+reward_model:
+  reward_manager: dapo
+  overlong_buffer: 
+    enable: False # We try to avoid forgetting to set enable
+    len: 0
+    penalty_factor: 0.0
+    log: False
+
+# Optional: filter training sequences by mean entropy (computed from actor log-prob forward).
+# This keeps only high/low-entropy responses at the sequence level (no token-level masking).
+#
+trainer:
+   entropy_filter:
+     enable: true
+     mode: high        # high | low
+     keep_ratio: 0.8   # keep top/bottom fraction when threshold is null
+     threshold: null   # absolute entropy threshold (if set, keep_ratio is ignored)
+     min_keep: 1       # guarantee at least this many sequences per batch

@@ -1,0 +1,165 @@
++ project_name=main-exp
++ trainer_name=basic
++ rollout_n=16
++ redundancy_n=16
++ exp_name=7b-dapo-basic-16/16
++ export VLLM_USE_V1=1
++ VLLM_USE_V1=1
++ RAY_DATA_HOME=/apdcephfs_zwfy2/share_303541817/pkuhetu/siwei/galvatron-rl/tasks/verl-stream
++ MODEL_PATH=/apdcephfs_zwfy2/share_303541817/pkuhetu/siwei/model/Qwen2.5-Math-7B
++ CKPTS_DIR=/apdcephfs_zwfy2/share_303541817/pkuhetu/siwei/galvatron-rl/tasks/verl-stream/ckpts/main-exp/7b-dapo-basic-16/16
++ TRAIN_FILE=/apdcephfs_zwfy2/share_303541817/pkuhetu/siwei/data/dapo-math-17k_cleaned.parquet
++ TEST_FILE=/apdcephfs_zwfy2/share_303541817/pkuhetu/siwei/data/aime-2024.parquet
++ NNODES=4
++ NGPUS_PER_NODE=8
++ n_gpus_rollout=4
++ n_gpus_training=4
++ max_prompt_length=2048
++ max_response_length=10240
++ actor_ppo_max_token_len=36864
++ infer_ppo_max_token_len=36864
++ enable_overlong_buffer=True
++ overlong_buffer_len=5120
++ overlong_penalty_factor=1.0
++ python -m recipe.one_step_off_policy.main_ppo algorithm.adv_estimator=grpo algorithm.trainer_name=basic algorithm.redundancy=16 data.train_files=/apdcephfs_zwfy2/share_303541817/pkuhetu/siwei/data/dapo-math-17k_cleaned.parquet data.val_files=/apdcephfs_zwfy2/share_303541817/pkuhetu/siwei/data/aime-2024.parquet data.train_batch_size=512 data.return_raw_chat=True data.max_prompt_length=2048 data.max_response_length=10240 data.filter_overlong_prompts=True data.truncation=error actor_rollout_ref.actor.strategy=fsdp critic.strategy=fsdp actor_rollout_ref.model.path=/apdcephfs_zwfy2/share_303541817/pkuhetu/siwei/model/Qwen2.5-Math-7B actor_rollout_ref.actor.optim.lr=1e-6 actor_rollout_ref.hybrid_engine=False actor_rollout_ref.model.use_remove_padding=True actor_rollout_ref.actor.ppo_mini_batch_size=32 actor_rollout_ref.actor.use_kl_loss=True actor_rollout_ref.actor.kl_loss_coef=0.001 actor_rollout_ref.actor.kl_loss_type=low_var_kl actor_rollout_ref.actor.entropy_coeff=0 actor_rollout_ref.actor.clip_ratio_low=0.2 actor_rollout_ref.actor.clip_ratio_high=0.28 actor_rollout_ref.model.enable_gradient_checkpointing=True actor_rollout_ref.actor.fsdp_config.param_offload=False actor_rollout_ref.actor.fsdp_config.optimizer_offload=False actor_rollout_ref.rollout.name=vllm actor_rollout_ref.rollout.gpu_memory_utilization=0.8 actor_rollout_ref.rollout.n=16 actor_rollout_ref.rollout.load_format=safetensors actor_rollout_ref.rollout.layered_summon=True actor_rollout_ref.ref.fsdp_config.param_offload=False actor_rollout_ref.rollout.free_cache_engine=False actor_rollout_ref.rollout.mode=async actor_rollout_ref.rollout.log_prob_use_dynamic_bsz=True actor_rollout_ref.ref.log_prob_use_dynamic_bsz=True actor_rollout_ref.actor.use_dynamic_bsz=True actor_rollout_ref.actor.ppo_max_token_len_per_gpu=36864 actor_rollout_ref.ref.log_prob_max_token_len_per_gpu=36864 actor_rollout_ref.rollout.log_prob_max_token_len_per_gpu=36864 actor_rollout_ref.rollout.tensor_model_parallel_size=2 algorithm.use_kl_in_reward=False reward_model.reward_manager=dapo +reward_model.reward_kwargs.overlong_buffer_cfg.enable=True +reward_model.reward_kwargs.overlong_buffer_cfg.len=5120 +reward_model.reward_kwargs.overlong_buffer_cfg.penalty_factor=1.0 +reward_model.reward_kwargs.overlong_buffer_cfg.log=False +reward_model.reward_kwargs.max_resp_len=10240 trainer.critic_warmup=0 trainer.val_before_train=False 'trainer.logger=[console,swanlab]' trainer.project_name=main-exp trainer.experiment_name=7b-dapo-basic-16/16 trainer.save_freq=100 trainer.test_freq=10 trainer.total_epochs=10 trainer.total_training_steps=500 trainer.nnodes=4 trainer.n_gpus_per_node=4 rollout.nnodes=4 rollout.n_gpus_per_node=4 trainer.project_name=dapo trainer.experiment_name=dapo_7b_lr1e-6_mainppo_redundancy8of16
+2025-10-09 11:15:22,662	INFO worker.py:1747 -- Connecting to existing Ray cluster at address: 28.49.16.220:6379...
+2025-10-09 11:15:22,678	INFO worker.py:1918 -- Connected to Ray cluster. View the dashboard at [1m[32m28.49.16.220:8265 [39m[22m
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:   0%|          | 0/17917 [00:00<?, ? examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:   6%|▌         | 1000/17917 [00:00<00:04, 3420.51 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  11%|█         | 2000/17917 [00:00<00:04, 3630.48 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  17%|█▋        | 3000/17917 [00:00<00:04, 3720.31 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  22%|██▏       | 4000/17917 [00:01<00:03, 3774.72 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  28%|██▊       | 5000/17917 [00:01<00:03, 3813.35 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  33%|███▎      | 6000/17917 [00:01<00:03, 3782.24 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  39%|███▉      | 7000/17917 [00:01<00:03, 3611.85 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  45%|████▍     | 8000/17917 [00:02<00:02, 3611.19 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  50%|█████     | 9000/17917 [00:02<00:02, 3663.06 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  56%|█████▌    | 10000/17917 [00:02<00:02, 3695.03 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  61%|██████▏   | 11000/17917 [00:02<00:01, 3663.38 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  67%|██████▋   | 12000/17917 [00:03<00:01, 3685.52 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  73%|███████▎  | 13000/17917 [00:03<00:01, 3699.01 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  78%|███████▊  | 14000/17917 [00:03<00:01, 3634.37 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  84%|████████▎ | 15000/17917 [00:04<00:00, 3621.68 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  89%|████████▉ | 16000/17917 [00:04<00:00, 3654.23 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:  95%|█████████▍| 17000/17917 [00:04<00:00, 3709.48 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens: 100%|██████████| 17917/17917 [00:04<00:00, 3761.35 examples/s]Filtering prompts longer than 2048 tokens: 100%|██████████| 17917/17917 [00:04<00:00, 3690.97 examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens:   0%|          | 0/960 [00:00<?, ? examples/s]
+[36m(TaskRunner pid=2357871)[0m Filtering prompts longer than 2048 tokens: 100%|██████████| 960/960 [00:00<00:00, 3606.95 examples/s]Filtering prompts longer than 2048 tokens: 100%|██████████| 960/960 [00:00<00:00, 3593.43 examples/s]
+[36m(TaskRunner pid=2357871)[0m DeprecationWarning: `ray.state.available_resources_per_node` is a private attribute and access will be removed in a future Ray version.
+[36m(TaskRunner pid=2357871)[0m WARNING:2025-10-09 11:16:02,982:Waiting for register center actor A2ZmOc_register_center to be ready. Elapsed time: 0 seconds out of 300 seconds.
+[36m(pid=2358819)[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.
+[36m(TaskRunner pid=2357871)[0m WARNING:2025-10-09 11:16:29,651:Waiting for register center actor OoGRmA_register_center to be ready. Elapsed time: 0 seconds out of 300 seconds.
+[36m(TaskRunner pid=2357871)[0m WARNING:2025-10-09 11:16:59,776:Waiting for register center actor OoGRmA_register_center to be ready. Elapsed time: 30 seconds out of 300 seconds.
+[36m(pid=2359248)[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.
+[36m(pid=2877735, ip=28.49.33.134)[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.[32m [repeated 4x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+[36m(WorkerDict pid=2358819)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[36m(WorkerDict pid=2358819)[0m You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[36m(WorkerDict pid=2358819)[0m Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+[36m(pid=3717913, ip=28.59.81.136)[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.[32m [repeated 11x across cluster][0m
+[36m(WorkerDict pid=2877737, ip=28.49.33.134)[0m Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:11,  3.67s/it]
+[36m(WorkerDict pid=3717915, ip=28.59.81.136)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`[32m [repeated 15x across cluster][0m
+[36m(WorkerDict pid=3717915, ip=28.59.81.136)[0m You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.[32m [repeated 15x across cluster][0m
+[36m(WorkerDict pid=3717915, ip=28.59.81.136)[0m Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s][32m [repeated 15x across cluster][0m
+[36m(WorkerDict pid=2877737, ip=28.49.33.134)[0m Loading checkpoint shards:  75%|███████▌  | 3/4 [00:09<00:03,  3.16s/it][32m [repeated 24x across cluster][0m
+[36m(WorkerDict pid=2877737, ip=28.49.33.134)[0m Loading checkpoint shards: 100%|██████████| 4/4 [00:12<00:00,  3.07s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:12<00:00,  3.16s/it]
+[36m(WorkerDict pid=2359250)[0m Loading checkpoint shards:  50%|█████     | 2/4 [00:27<00:27, 13.59s/it][32m [repeated 16x across cluster][0m
+[36m(WorkerDict pid=3717914, ip=28.59.81.136)[0m Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.51s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.56s/it][32m [repeated 11x across cluster][0m
+[36m(pid=2360268)[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.
+[36m(WorkerDict pid=2359248)[0m Loading checkpoint shards:  50%|█████     | 2/4 [00:27<00:27, 13.65s/it][32m [repeated 3x across cluster][0m
+[36m(pid=2360269)[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.[32m [repeated 2x across cluster][0m
+[36m(WorkerDict pid=2358819)[0m Loading checkpoint shards:  75%|███████▌  | 3/4 [00:40<00:13, 13.24s/it]
+[36m(WorkerDict pid=2359250)[0m Loading checkpoint shards:  75%|███████▌  | 3/4 [00:40<00:13, 13.23s/it]
+[36m(pid=2425691, ip=28.49.54.8)[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.[32m [repeated 2x across cluster][0m
+[36m(WorkerDict pid=2359248)[0m Loading checkpoint shards:  75%|███████▌  | 3/4 [00:40<00:13, 13.21s/it][32m [repeated 2x across cluster][0m
+[36m(WorkerDict pid=2359250)[0m Loading checkpoint shards: 100%|██████████| 4/4 [00:52<00:00, 12.93s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:52<00:00, 13.16s/it]
+[36m(pid=2425690, ip=28.49.54.8)[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.[32m [repeated 10x across cluster][0m
+[36m(WorkerDict pid=2877735, ip=28.49.33.134)[0m Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+[36m(WorkerDict pid=2359248)[0m Loading checkpoint shards: 100%|██████████| 4/4 [00:52<00:00, 12.99s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:52<00:00, 13.20s/it][32m [repeated 3x across cluster][0m
+[36m(WorkerDict pid=3717914, ip=28.59.81.136)[0m Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.08s/it]
+[36m(WorkerDict pid=2877737, ip=28.49.33.134)[0m Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s][32m [repeated 15x across cluster][0m
+[36m(WorkerDict pid=2358819)[0m Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.84s/it][32m [repeated 32x across cluster][0m
+[36m(WorkerDict pid=2358819)[0m Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.64s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.77s/it]
+[36m(WorkerDict pid=2424418, ip=28.49.54.8)[0m Loading checkpoint shards:  75%|███████▌  | 3/4 [00:10<00:03,  3.64s/it][32m [repeated 15x across cluster][0m
+[36m(WorkerDict pid=2360269)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[36m(WorkerDict pid=2360269)[0m You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[36m(WorkerDict pid=2424418, ip=28.49.54.8)[0m Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.49s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.56s/it][32m [repeated 15x across cluster][0m
+[36m(WorkerDict pid=2878419, ip=28.49.33.134)[0m Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+[36m(WorkerDict pid=2359266)[0m Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.70s/it]
+[36m(WorkerDict pid=2425688, ip=28.49.54.8)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`[32m [repeated 15x across cluster][0m
+[36m(WorkerDict pid=2425688, ip=28.49.54.8)[0m You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.[32m [repeated 15x across cluster][0m
+[36m(WorkerDict pid=2425688, ip=28.49.54.8)[0m Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s][32m [repeated 15x across cluster][0m
+[36m(WorkerDict pid=2425690, ip=28.49.54.8)[0m Loading checkpoint shards:  50%|█████     | 2/4 [00:07<00:07,  3.82s/it][32m [repeated 31x across cluster][0m
+[36m(WorkerDict pid=2359266)[0m Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.75s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.76s/it]
+[36m(WorkerDict pid=2425690, ip=28.49.54.8)[0m Loading checkpoint shards:  75%|███████▌  | 3/4 [00:11<00:03,  3.78s/it][32m [repeated 16x across cluster][0m
+[36m(WorkerDict pid=2359266)[0m /jizhicfs/johnnyslin/anaconda3/envs/csw-verl/lib/python3.10/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py:690: FutureWarning: FSDP.state_dict_type() and FSDP.set_state_dict_type() are being deprecated. Please use APIs, get_state_dict() and set_state_dict(), which can support different parallelisms, FSDP1, FSDP2, DDP. API doc: https://pytorch.org/docs/stable/distributed.checkpoint.html#torch.distributed.checkpoint.state_dict.get_state_dict .Tutorial: https://pytorch.org/tutorials/recipes/distributed_checkpoint_recipe.html .
+[36m(WorkerDict pid=2359266)[0m   warnings.warn(
+[36m(WorkerDict pid=2425690, ip=28.49.54.8)[0m Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.63s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.70s/it][32m [repeated 15x across cluster][0m
+[36m(AsyncvLLMServer pid=2361366)[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.
+[36m(WorkerDict pid=2877738, ip=28.49.33.134)[0m /apdcephfs_zwfy2/share_303541817/pkuhetu/anaconda3/envs/csw-verl/lib/python3.10/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py:690: FutureWarning: FSDP.state_dict_type() and FSDP.set_state_dict_type() are being deprecated. Please use APIs, get_state_dict() and set_state_dict(), which can support different parallelisms, FSDP1, FSDP2, DDP. API doc: https://pytorch.org/docs/stable/distributed.checkpoint.html#torch.distributed.checkpoint.state_dict.get_state_dict .Tutorial: https://pytorch.org/tutorials/recipes/distributed_checkpoint_recipe.html .[32m [repeated 31x across cluster][0m
+[36m(WorkerDict pid=2877738, ip=28.49.33.134)[0m   warnings.warn([32m [repeated 31x across cluster][0m
+[36m(WorkerDict pid=2359266)[0m Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+[36m(AsyncvLLMServer pid=3720263, ip=28.59.81.136)[0m Using blocking ray.get inside async actor. This blocks the event loop. Please use `await` on object ref with asyncio.gather if you want to yield execution to the event loop instead.[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=2359266)[0m Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:01,  1.74it/s]
+[36m(WorkerDict pid=2359266)[0m Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:01<00:01,  1.67it/s]
+[36m(WorkerDict pid=2359266)[0m Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:01<00:00,  1.85it/s]
+[36m(WorkerDict pid=2359266)[0m Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:02<00:00,  1.78it/s]
+[36m(WorkerDict pid=2359266)[0m Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:02<00:00,  1.77it/s]
+[36m(WorkerDict pid=2359266)[0m 
+[36m(NCCLUniqueIDStore pid=2362039)[0m The NCCL ID has not been set yet for store e84586912c94c03609371070bb3c047ffe9ec615.
+[36m(TaskRunner pid=2357871)[0m Training Progress:   0%|          | 0/500 [00:00<?, ?it/s]
+[36m(AgentLoopWorker pid=2427539, ip=28.49.54.8)[0m You're using a Qwen2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+[36m(AgentLoopWorker pid=2427536, ip=28.49.54.8)[0m You're using a Qwen2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+[36m(AgentLoopWorker pid=2880588, ip=28.49.33.134)[0m You're using a Qwen2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+[36m(AgentLoopWorker pid=2427537, ip=28.49.54.8)[0m You're using a Qwen2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.[32m [repeated 2x across cluster][0m
+[36m(AgentLoopWorker pid=2880591, ip=28.49.33.134)[0m You're using a Qwen2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.[32m [repeated 2x across cluster][0m
+[36m(AgentLoopWorker pid=2880589, ip=28.49.33.134)[0m You're using a Qwen2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+[36m(TaskRunner pid=2357871)[0m Training Progress:   0%|          | 1/500 [15:26<128:26:26, 926.63s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   0%|          | 2/500 [29:41<122:18:57, 884.21s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   1%|          | 3/500 [44:05<120:48:34, 875.08s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   1%|          | 4/500 [56:58<115:02:06, 834.93s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   1%|          | 5/500 [1:09:27<110:32:50, 803.98s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   1%|          | 6/500 [1:21:30<106:31:48, 776.33s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   1%|▏         | 7/500 [1:32:24<100:49:06, 736.20s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   2%|▏         | 8/500 [1:43:00<96:15:08, 704.29s/it] 
+[36m(TaskRunner pid=2357871)[0m Training Progress:   2%|▏         | 9/500 [1:53:34<93:03:52, 682.35s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   2%|▏         | 10/500 [2:06:26<96:39:33, 710.15s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   2%|▏         | 11/500 [2:16:23<91:44:07, 675.35s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   2%|▏         | 12/500 [2:25:20<85:51:45, 633.41s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   3%|▎         | 13/500 [2:34:10<81:27:47, 602.19s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   3%|▎         | 14/500 [2:42:54<78:05:02, 578.40s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   3%|▎         | 15/500 [2:51:57<76:29:24, 567.76s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   3%|▎         | 16/500 [3:00:36<74:22:45, 553.23s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   3%|▎         | 17/500 [3:09:20<73:02:29, 544.41s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   4%|▎         | 18/500 [3:18:21<72:43:52, 543.22s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   4%|▍         | 19/500 [3:27:19<72:23:31, 541.81s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   4%|▍         | 20/500 [3:38:16<76:49:54, 576.24s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   4%|▍         | 21/500 [3:47:24<75:33:28, 567.87s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   4%|▍         | 22/500 [3:56:26<74:21:25, 560.01s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   5%|▍         | 23/500 [4:05:02<72:27:52, 546.90s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   5%|▍         | 24/500 [4:13:24<70:32:04, 533.46s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   5%|▌         | 25/500 [4:22:36<71:07:36, 539.07s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   5%|▌         | 26/500 [4:30:48<69:06:52, 524.92s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   5%|▌         | 27/500 [4:39:50<69:37:27, 529.91s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   6%|▌         | 28/500 [4:48:19<68:39:52, 523.71s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   6%|▌         | 29/500 [4:57:32<69:40:01, 532.49s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   6%|▌         | 30/500 [5:08:34<74:35:04, 571.29s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   6%|▌         | 31/500 [5:17:17<72:33:11, 556.91s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   6%|▋         | 32/500 [5:26:53<73:08:20, 562.61s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   7%|▋         | 33/500 [5:35:29<71:10:17, 548.65s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   7%|▋         | 34/500 [5:44:14<70:04:50, 541.40s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   7%|▋         | 35/500 [5:53:27<70:23:39, 544.99s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   7%|▋         | 36/500 [6:01:46<68:28:38, 531.29s/it]
+[36m(TaskRunner pid=2357871)[0m WARNING:2025-10-09 17:27:16,516:Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /api/house/metrics
+[36m(TaskRunner pid=2357871)[0m Training Progress:   7%|▋         | 37/500 [6:09:31<65:45:56, 511.35s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   8%|▊         | 38/500 [6:16:30<62:04:18, 483.68s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   8%|▊         | 39/500 [6:22:28<57:06:28, 445.96s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   8%|▊         | 40/500 [6:29:24<55:50:11, 436.98s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   8%|▊         | 41/500 [6:35:39<53:20:31, 418.37s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   8%|▊         | 42/500 [6:42:15<52:21:22, 411.53s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   9%|▊         | 43/500 [6:48:51<51:38:29, 406.81s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   9%|▉         | 44/500 [6:55:07<50:22:20, 397.68s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   9%|▉         | 45/500 [7:01:12<49:01:22, 387.87s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   9%|▉         | 46/500 [7:07:10<47:46:33, 378.84s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:   9%|▉         | 47/500 [7:13:01<46:36:48, 370.44s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:  10%|▉         | 48/500 [7:19:08<46:22:55, 369.42s/it]
+[36m(TaskRunner pid=2357871)[0m Training Progress:  10%|▉         | 49/500 [7:25:15<46:11:43, 368.74s/it]
