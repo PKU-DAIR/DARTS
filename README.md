@@ -1,12 +1,37 @@
-# DARTS
 
-Code implementation for DARTS: Distribution-Aware Active Rollout Trajectory Shaping for Accelerating LLM Reinforcement Learning. [DARTS: Distribution-Aware Active Rollout Trajectory Shaping for Accelerating LLM Reinforcement Learning]
+# DARTS Code Structure
+
+This repository contains the full codebase for DARTS. Below is a guide to the main code components, modules, and usage instructions.
 
 ## Requirements
 
-Our implement is base on VeRL, please follow the [VeRL](https://github.com/volcengine/verl?tab=readme-ov-file#contribution-guide) repo to install the requirements.
+- The code is based on VeRL. Please install dependencies as described in [VeRL](https://github.com/volcengine/verl?tab=readme-ov-file#contribution-guide).
+- Environment configuration is provided in `env.yml`.
 
-## Main code
+## Directory Overview
 
-The main training logic is under recipe/darts, including training recipe and main logic. We implement different baseline and overlap method.
+- `recipe/darts/` : Main training logic, recipes, and experiment scripts. Includes baseline and overlap methods.
+- `verl/` : Core VeRL code, including distributed training, model utilities, and worker implementations. Some files are modified for DARTS.
+
+## Key Modules & Scripts
+
+- `verl/workers/actor/dp_actor.py` : Modified for token-level overlap support.
+- `verl/workers/rollout/vllm_rollout/vllm_async_server.py` : Implements Async LLM Engine for token-level response streaming and forward computation during generation.
+- `verl/workers/rollout/vllm_rollout/ray_trainer_stream3.py` : Redundant rollout logic, including repeat number control and Ray actor synchronization.
+
+## Usage
+
+1. Prepare environment and install dependencies.
+2. Configure training recipes in `recipe/darts/`.
+3. Run training scripts as described in the recipe folder.
+4. For distributed and redundant rollout, see modified files in `verl/workers/rollout/vllm_rollout/`.
+
+## Notes
+
+- Most core RL and distributed logic is inherited from VeRL. Only key files are modified for DARTS-specific features.
+- For details on token-level overlap and redundant rollout, see comments in the relevant Python files.
+
+## Citation
+
+If you use this codebase, please cite our paper.
 
