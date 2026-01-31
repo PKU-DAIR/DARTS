@@ -42,7 +42,7 @@ from verl.trainer.ppo.ray_trainer import (
 )
 from verl.utils.profiler import marked_timer
 
-from recipe.one_step_off_policy.ray_trainer import OneStepOffRayTrainer
+from recipe.darts.ray_trainer import OneStepOffRayTrainer
 class RayDAPOTrainer(OneStepOffRayTrainer):
     """
     Note that this trainer runs on the driver process on a single CPU/GPU node.

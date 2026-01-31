@@ -32,7 +32,7 @@ during long-tail sample generation. Throughout this process, generation and trai
 policy.
 
 ![One Step Off Policy Diagram](
-https://raw.githubusercontent.com/eric-haibin-lin/verl-community/refs/heads/main/docs/one_step_off_policy.png)
+https://raw.githubusercontent.com/eric-haibin-lin/verl-community/refs/heads/main/docs/darts.png)
 > reference: [AReaL: A Large-Scale Asynchronous Reinforcement Learning System for Language Reasoning](
 > https://arxiv.org/abs/2505.24298)
 
@@ -215,7 +215,7 @@ def sync_rollout_weights(self):
 ### FSDP2 Configuration Example
 
 ```shell
-python3 -m recipe.one_step_off_policy.async_main_ppo \
+python3 -m recipe.darts.async_main_ppo \
     --config-path=config \
     --config-name='one_step_off_ppo_trainer.yaml' \
     actor_rollout_ref.actor.strategy=fsdp2 \
@@ -231,7 +231,7 @@ python3 -m recipe.one_step_off_policy.async_main_ppo \
 ### Megatron Configuration Example
 
 ```shell
-python3 -m recipe.one_step_off_policy.async_main_ppo \
+python3 -m recipe.darts.async_main_ppo \
     --config-path=config \
     --config-name='one_step_off_ppo_megatron_trainer.yaml' \
     actor_rollout_ref.actor.strategy=megatron \

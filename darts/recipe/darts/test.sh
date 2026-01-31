@@ -19,7 +19,7 @@ n_gpus_rollout=4
 n_gpus_training=$((NGPUS_PER_NODE - n_gpus_rollout))
 
 
-python -m recipe.one_step_off_policy.main_ppo \
+python -m recipe.darts.main_ppo \
     algorithm.adv_estimator=grpo \
     data.train_files="${TRAIN_FILE}" \
     data.val_files="${TEST_FILE}" \

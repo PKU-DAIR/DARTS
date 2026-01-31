@@ -580,11 +580,7 @@ class DataParallelPPOActor(BasePPOActor):
                 
                 if use_cache and batch_past_key_values is not None:
                     extra_args["past_key_values"] = batch_past_key_values
-                                        
-                #logger.info(f"🚀 Input length: {len(input_ids_rmpad[0])}")
-                #if use_cache and batch_past_key_values is not None:
-                    #logger.info(f"🚀 Input past_key_values length: {batch_past_key_values.get_seq_length()}")
-                    
+              
                 past_len = 0
                 if batch_past_key_values is not None:
                     past_len = batch_past_key_values.get_seq_length()
@@ -601,10 +597,7 @@ class DataParallelPPOActor(BasePPOActor):
                     cu_kvlen=cu_seqlens_kv,
                     **extra_args,  # 移动到最后，避免参数重复冲突
                 )
-                
-                #if hasattr(output, 'past_key_values') and output.past_key_values is not None:
-                    #logger.info(f"🚀 Output past_key_values length: {output.past_key_values.get_seq_length()}")
-                    
+             
                 if use_cache and output.past_key_values.get_seq_length() != len(input_ids_rmpad[0])+past_len:
                     print(f"❌ Mismatch in KV cache length: expected {len(input_ids_rmpad[0])}, got {output.past_key_values.get_seq_length()}")
                     raise ValueError("quit")
@@ -946,28 +939,6 @@ class DataParallelPPOActor(BasePPOActor):
             grad_norm = fsdp2_clip_grad_norm_(self.actor_module.parameters(), max_norm=self.config.grad_clip)
         else:
             grad_norm = torch.nn.utils.clip_grad_norm_(self.actor_module.parameters(), max_norm=self.config.grad_clip)
-        if False:
-            all_grad_abs = []
-            for p in self.actor_module.parameters():
-                if p.grad is not None:
-                    grad_flat = p.grad.abs().reshape(-1)
-                    all_grad_abs.append(grad_flat)
-            
-            if not all_grad_abs:
-                return
-            all_grad_abs = torch.cat(all_grad_abs)
-            sample_size = 10000
-            sample_indices = random.sample(range(len(all_grad_abs)), sample_size)
-            grad_sample = all_grad_abs[sample_indices]        
-            grad_threshold = grad_sample.quantile(0.1)
-            grad9 = grad_sample.quantile(0.9)
-            grad99 = grad_sample.quantile(0.999)
-            grad95 = grad_sample.quantile(0.95)
-            for p in self.actor_module.parameters():
-                if p.grad is not None:
-                    mask = p.grad.abs() >= grad99
-                    p.grad.data = p.grad.data * mask.float()
-            print("🚀",grad_threshold, grad9, grad95, grad99)
 
         if not torch.isfinite(grad_norm):
             print(f"WARN: rank {torch.distributed.get_rank()} grad_norm is not finite: {grad_norm}")

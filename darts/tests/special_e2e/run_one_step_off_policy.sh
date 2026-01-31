@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -xeuo pipefail
 
-# Test script for one_step_off_policy E2E regression testing
-# This script runs one_step_off_policy with both FSDP2 and Megatron backends
+# Test script for darts E2E regression testing
+# This script runs darts with both FSDP2 and Megatron backends
 # to ensure the asynchronous training mechanism works correctly
 
 NUM_GPUS=${NUM_GPUS:-8}
@@ -50,7 +50,7 @@ n_gpus_training=$((NUM_GPUS - n_gpus_rollout))
 
 exp_name="$(basename "${MODEL_ID,,}")-one-step-off-policy-${ACTOR_STRATEGY}-minimal"
 
-echo "Running one_step_off_policy with ${ACTOR_STRATEGY} strategy"
+echo "Running darts with ${ACTOR_STRATEGY} strategy"
 echo "Total GPUs: ${NUM_GPUS}, Rollout GPUs: ${n_gpus_rollout}, Training GPUs: ${n_gpus_training}"
 
 # Common parameters for both FSDP2 and Megatron
@@ -121,7 +121,7 @@ if [ "${ACTOR_STRATEGY}" == "fsdp2" ]; then
     ref_offload=True
     actor_offload=False
 
-    python3 -m recipe.one_step_off_policy.main_ppo \
+    python3 -m recipe.darts.main_ppo \
         "${common_params[@]}" \
         actor_rollout_ref.actor.strategy=fsdp2 \
         critic.strategy=fsdp2 \
@@ -148,7 +148,7 @@ elif [ "${ACTOR_STRATEGY}" == "megatron" ]; then
     ref_offload=True
     actor_offload=False
 
-    python3 -m recipe.one_step_off_policy.main_ppo \
+    python3 -m recipe.darts.main_ppo \
         --config-path=config \
         --config-name='one_step_off_ppo_megatron_trainer.yaml' \
         "${common_params[@]}" \

@@ -61,7 +61,7 @@ gen_tp=2
 sp_size=4
 fsdp_size=2
 
-python3 -m recipe.one_step_off_policy.main_ppo \
+python3 -m recipe.darts.main_ppo \
     data.train_files="${TRAIN_FILE}" \
     data.val_files="${TEST_FILE}" \
     data.prompt_key=prompt \

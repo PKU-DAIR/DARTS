@@ -42,7 +42,7 @@ from verl.utils.torch_functional import masked_mean
 from verl.utils.tracking import ValidationGenerationsLogger
 
 WorkerType = type[Worker]
-from recipe.one_step_off_policy.ray_trainer import OneStepOffRayTrainer
+from recipe.darts.ray_trainer import OneStepOffRayTrainer
 import asyncio
 import queue
 import time

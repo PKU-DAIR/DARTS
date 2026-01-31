@@ -100,7 +100,7 @@ class TaskRunner:
         if config.actor_rollout_ref.actor.strategy in {"fsdp", "fsdp2"}:
             assert config.critic.strategy in {"fsdp", "fsdp2"}
             from verl.single_controller.ray import RayWorkerGroup
-            from recipe.one_step_off_policy.fsdp_workers import ActorRolloutRefWorker, AsyncActorRolloutRefWorker
+            from recipe.darts.fsdp_workers import ActorRolloutRefWorker, AsyncActorRolloutRefWorker
 
             use_legacy_worker_impl = config.trainer.get("use_legacy_worker_impl", "auto")
             if use_legacy_worker_impl in ["auto", "enable"]:
@@ -208,13 +208,13 @@ class TaskRunner:
         train_sampler = create_rl_sampler(config.data, train_dataset)
 
         # Initialize the PPO trainer.
-        from recipe.one_step_off_policy.ray_trainer_stream import RayTrainerStream
-        from recipe.one_step_off_policy.ray_trainer_stream2 import RayTrainerStream2
-        from recipe.one_step_off_policy.ray_trainer_stream3 import RayTrainerStream3
-        from recipe.one_step_off_policy.ray_trainer_nooverlap import SyncRayTrainer
-        from recipe.one_step_off_policy.ray_trainer_roll import RayTrainerRoll
-        from recipe.one_step_off_policy.ray_trainer_dapo import RayDAPOTrainer
-        from recipe.one_step_off_policy.ray_trainer_stream_dapo import RayTrainerStreamDAPO
+        from recipe.darts.ray_trainer_stream import RayTrainerStream
+        from recipe.darts.ray_trainer_stream2 import RayTrainerStream2
+        from recipe.darts.ray_trainer_stream3 import RayTrainerStream3
+        from recipe.darts.ray_trainer_nooverlap import SyncRayTrainer
+        from recipe.darts.ray_trainer_roll import RayTrainerRoll
+        from recipe.darts.ray_trainer_dapo import RayDAPOTrainer
+        from recipe.darts.ray_trainer_stream_dapo import RayTrainerStreamDAPO
 
 
         if config.algorithm.trainer_name == "basic":

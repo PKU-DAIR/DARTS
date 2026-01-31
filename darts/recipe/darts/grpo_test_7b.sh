@@ -24,7 +24,7 @@ max_response_length=$((1024 * 16))
 actor_ppo_max_token_len=$(((max_prompt_length + max_response_length) * 3))
 infer_ppo_max_token_len=$(((max_prompt_length + max_response_length) * 4))
 
-python -m recipe.one_step_off_policy.main_ppo \
+python -m recipe.darts.main_ppo \
     algorithm.adv_estimator=grpo \
     algorithm.trainer_name=${trainer_name} \
     algorithm.redundancy=${redundancy_n} \

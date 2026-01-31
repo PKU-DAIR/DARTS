@@ -48,9 +48,9 @@ from verl.utils.torch_functional import masked_mean
 from verl.utils.tracking import ValidationGenerationsLogger
 
 WorkerType = type[Worker]
-from recipe.one_step_off_policy.ray_trainer import OneStepOffRayTrainer
-from recipe.one_step_off_policy.save_metrics import _save_metrics_to_csv
-from recipe.one_step_off_policy.solver import ResourceOptimizer,repeat_by_position
+from recipe.darts.ray_trainer import OneStepOffRayTrainer
+from recipe.darts.save_metrics import _save_metrics_to_csv
+from recipe.darts.solver import ResourceOptimizer,repeat_by_position
 
 
 def apply_kl_penalty(data: DataProto, kl_ctrl: core_algos.AdaptiveKLController, kl_penalty="kl"):

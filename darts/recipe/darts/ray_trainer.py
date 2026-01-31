@@ -160,7 +160,7 @@ class OneStepOffRayTrainer(RayPPOTrainer):
             AdvantageEstimator.GRPO,
             AdvantageEstimator.GRPO_PASSK,
             AdvantageEstimator.REINFORCE_PLUS_PLUS,
-            # AdvantageEstimator.REMAX, # TODO:REMAX advantage estimator is not yet supported in one_step_off_policy
+            # AdvantageEstimator.REMAX, # TODO:REMAX advantage estimator is not yet supported in darts
             AdvantageEstimator.RLOO,
             AdvantageEstimator.OPO,
             AdvantageEstimator.REINFORCE_PLUS_PLUS_BASELINE,
