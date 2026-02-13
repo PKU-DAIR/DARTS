@@ -17,14 +17,14 @@ This repository contains the full codebase for DARTS. Below is a guide to the ma
 
 - `verl/workers/actor/dp_actor.py` : Modified for token-level overlap support.
 - `verl/workers/rollout/vllm_rollout/vllm_async_server.py` : Implements Async LLM Engine for token-level response streaming and forward computation during generation.
-- `verl/workers/rollout/vllm_rollout/ray_trainer_stream3.py` : Redundant rollout logic, including repeat number control and Ray actor synchronization.
+- `verl/workers/rollout/vllm_rollout/ray_trainer_darts.py` : Redundant rollout logic, including repeat number control and Ray actor synchronization.
 
 ## Usage
 
 1. Prepare environment and install dependencies.
 2. Configure training recipes in `recipe/darts/`.
 3. Run training scripts as described in the recipe folder.
-4. For distributed and redundant rollout, see modified files in `verl/workers/rollout/vllm_rollout/`.
+
 
 ## Notes
 

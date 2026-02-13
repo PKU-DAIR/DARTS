@@ -94,7 +94,7 @@ Usage Example
     bash examples/sglang_multiturn/run_qwen2.5-3b_gsm8k_tool_agent_mlflow.sh
 
     # When training is done, start a mlflow server to view trace
-    mlflow ui -h 0.0.0.0 -p 5000 --backend-store-uri sqlite:////tmp/mlruns.db
+    mlflow ui -h 0.0.0.0 -p 5000 --backend-store-uri sqlite://tmp/mlruns.db
 
     # then you can open http://<your ip address>:5000 from browser to view trace
 

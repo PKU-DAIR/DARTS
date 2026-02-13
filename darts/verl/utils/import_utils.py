@@ -93,7 +93,7 @@ def load_extern_type(file_path: Optional[str], type_name: Optional[str]) -> type
 
     else:
         # file://verl/utils/dataset/rl_dataset
-        # file:///path/to/verl/utils/dataset/rl_dataset.py
+        # file:/path/to/verl/utils/dataset/rl_dataset.py
         # or without file:// prefix
         if file_path.startswith("file://"):
             file_path = file_path[7:]

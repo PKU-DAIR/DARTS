@@ -328,7 +328,7 @@ def compute_advantage(
     return data
 
 
-class RayTrainerStream3(OneStepOffRayTrainer):
+class RayTrainerDarts(OneStepOffRayTrainer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.token_batch_threshold = None
@@ -441,7 +441,7 @@ class RayTrainerStream3(OneStepOffRayTrainer):
     def _save_step_responses_to_csv(self, batch: DataProto, step: int):
         """将当前步骤的所有回复保存到CSV文件"""
         try:
-            output_path = "////step_responses.csv"
+            output_path = "//step_responses.csv"
             
             # 提取数据
             responses_text = self.tokenizer.batch_decode(batch.batch["responses"], skip_special_tokens=True)
@@ -1569,7 +1569,7 @@ class RayTrainerStream3(OneStepOffRayTrainer):
 
                 # —— 写入到你指定的绝对目录 —— 
                 if False:
-                    base_dir = "///darts/logs"
+                    base_dir = "/darts/logs"
                     os.makedirs(base_dir, exist_ok=True)
 
                     out_path = os.path.join(base_dir, "metrics_history.csv")

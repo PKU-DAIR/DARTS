@@ -41,15 +41,15 @@ train_prompt_mini_bsz=32
 # RUNTIME_ENV=${RUNTIME_ENV:-"${WORKING_DIR}/verl/trainer/runtime_env.yaml"}
 
 # Paths
-RAY_DATA_HOME=${RAY_DATA_HOME:-"///darts"}
+RAY_DATA_HOME=${RAY_DATA_HOME:-"/darts"}
 
 # very important! please modify the max_position_embeddings in config.json to 32768 after downloading from huggingface
-MODEL_PATH=${MODEL_PATH:-"////model/Qwen2.5-3B"}
-#MODEL_PATH=${MODEL_PATH:-"////model/Qwen2.5-32B"}
+MODEL_PATH=${MODEL_PATH:-"//model/Qwen2.5-3B"}
+#MODEL_PATH=${MODEL_PATH:-"//model/Qwen2.5-32B"}
 CKPTS_DIR=${CKPTS_DIR:-"${RAY_DATA_HOME}/checkpoints/${project_name}/${exp_name}"}
-#CKPTS_DIR=${CKPTS_DIR:-"///darts/ckpts/main-exp/DAPO-Qwen2.5-7b-MATH-32"}
-TRAIN_FILE=${TRAIN_FILE:-"////data/math/train.parquet"}
-TEST_FILE=${TEST_FILE:-"////data/math/test.parquet"}
+#CKPTS_DIR=${CKPTS_DIR:-"/darts/ckpts/main-exp/DAPO-Qwen2.5-7b-MATH-32"}
+TRAIN_FILE=${TRAIN_FILE:-"//data/math/train.parquet"}
+TEST_FILE=${TEST_FILE:-"//data/math/test.parquet"}
 NNODES=${NNODES:-1}
 NGPUS_PER_NODE=${NGPUS_PER_NODE:-8}
 

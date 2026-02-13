@@ -38,20 +38,20 @@ eg.
 {
     "type": "video",
     "video": [
-        "file:///path/to/frame1.jpg",
-        "file:///path/to/frame2.jpg"
+        "file:/path/to/frame1.jpg",
+        "file:/path/to/frame2.jpg"
     ]
 }
 
 {
     "type": "video",
-    "video": "file:///path/to/video.mp4"
+    "video": "file:/path/to/video.mp4"
 }
 # Defaults to fps=2, min_frames=4, max_frames=768
 
 {
     "type": "video",
-    "video": "file:///path/to/video.mp4",
+    "video": "file:/path/to/video.mp4",
     "fps": 2,
     "min_frames": 1,
     "max_frames": 32

@@ -33,10 +33,10 @@ train_prompt_mini_bsz=32
 NNODES=${NNODES:-4}
 NGPUS_PER_NODE=${NGPUS_PER_NODE:-8}
 # Paths
-RAY_DATA_HOME=${RAY_DATA_HOME:-"///darts"}
+RAY_DATA_HOME=${RAY_DATA_HOME:-"/darts"}
 
 # very important! please modify the max_position_embeddings in config.json to 32768 after downloading from huggingface
-MODEL_PATH=${MODEL_PATH:-"////model/Qwen2.5-Math-7B"}
+MODEL_PATH=${MODEL_PATH:-"//model/Qwen2.5-Math-7B"}
 CKPTS_DIR=${CKPTS_DIR:-"${RAY_DATA_HOME}/ckpts/${project_name}/${exp_name}"}
 TRAIN_FILE=${TRAIN_FILE:-"/data/dapo-math-17k_cleaned.parquet"}
 TEST_FILE=${TEST_FILE:-"/data/aime-2024.parquet"}

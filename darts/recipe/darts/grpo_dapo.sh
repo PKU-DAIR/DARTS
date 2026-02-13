@@ -45,14 +45,14 @@ train_prompt_mini_bsz=32
 # RUNTIME_ENV=${RUNTIME_ENV:-"${WORKING_DIR}/verl/trainer/runtime_env.yaml"}
 
 # Paths
-RAY_DATA_HOME=${RAY_DATA_HOME:-"///darts"}
+RAY_DATA_HOME=${RAY_DATA_HOME:-"/darts"}
 
 # very important! please modify the max_position_embeddings in config.json to 32768 after downloading from huggingface
-MODEL_PATH=${MODEL_PATH:-"////model/Qwen2.5-Math-7B"}
-#MODEL_PATH=${MODEL_PATH:-"////model/DeepSeek-R1-Distill-Qwen-7B"}
+MODEL_PATH=${MODEL_PATH:-"/model/Qwen2.5-Math-7B"}
+#MODEL_PATH=${MODEL_PATH:-"//model/DeepSeek-R1-Distill-Qwen-7B"}
 CKPTS_DIR=${CKPTS_DIR:-"${RAY_DATA_HOME}/checkpoints/${project_name}/${exp_name}"}
-#CKPTS_DIR=${CKPTS_DIR:-"///darts/ckpts/main-exp/DAPO-Qwen2.5-7b-MATH-32"}
-TRAIN_FILE=${TRAIN_FILE:-"////data/deepmath/train.parquet"}
+#CKPTS_DIR=${CKPTS_DIR:-"/darts/ckpts/main-exp/DAPO-Qwen2.5-7b-MATH-32"}
+TRAIN_FILE=${TRAIN_FILE:-"/data/deepmath/train.parquet"}
 TEST_FILE=${TEST_FILE:-"/data/aime-2024.parquet"}
 NNODES=${NNODES:-4}
 NGPUS_PER_NODE=${NGPUS_PER_NODE:-8}

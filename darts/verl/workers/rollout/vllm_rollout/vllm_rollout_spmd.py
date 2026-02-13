@@ -427,7 +427,7 @@ class vLLMAsyncRollout:
         with FileLock("/tmp/verl_vllm_zmq.lock"):
             if socket_type == "ipc":
                 pid = os.getpid()
-                address = f"ipc:///tmp/verl_vllm_zmq_{pid}.ipc"
+                address = f"ipc:/tmp/verl_vllm_zmq_{pid}.ipc"
             else:
                 ip, port = self._get_free_port()
                 address = f"tcp://{ip}:{port}"

@@ -94,7 +94,7 @@ Usage of mlflow
 1. Set the ``MLFLOW_TRACKING_URI`` environment variable, which can be:
 
    1. Http and https URLs corresponding to online services
-   2. Local files or directories, such as ``sqlite:////tmp/mlruns.db``, indicate that data is stored in ``/tmp/mlruns.db``. When using local files, it is necessary to initialize the file first (e.g., start the UI: ``mlflow ui --backend-store-uri sqlite:////tmp/mlruns.db``) to avoid conflicts when multiple workers create files simultaneously.
+   2. Local files or directories, such as ``sqlite://tmp/mlruns.db``, indicate that data is stored in ``/tmp/mlruns.db``. When using local files, it is necessary to initialize the file first (e.g., start the UI: ``mlflow ui --backend-store-uri sqlite://tmp/mlruns.db``) to avoid conflicts when multiple workers create files simultaneously.
 
 2. Configuration Parameters
 

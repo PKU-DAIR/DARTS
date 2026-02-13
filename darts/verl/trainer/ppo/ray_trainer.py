@@ -1434,7 +1434,7 @@ class RayPPOTrainer:
                 len_epoch = self.len_filter.get_all_scores()
 
                 # 确保输出目录存在
-                base_dir = "///darts/logs"
+                base_dir = "/darts/logs"
                 os.makedirs(base_dir, exist_ok=True)
 
                 # 写入历史统计数据

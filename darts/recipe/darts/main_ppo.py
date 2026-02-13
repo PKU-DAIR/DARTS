@@ -29,7 +29,7 @@ from verl.trainer.ppo.reward import load_reward_manager
 
 from .ray_trainer import OneStepOffRayTrainer
 
-@hydra.main(config_path="config", config_name="one_step_off_ppo_trainer", version_base=None)
+@hydra.main(config_path="config", config_name="darts_trainer", version_base=None)
 def main(config):
     run_ppo(config)
 
@@ -210,7 +210,7 @@ class TaskRunner:
         # Initialize the PPO trainer.
         from recipe.darts.ray_trainer_stream import RayTrainerStream
         from recipe.darts.ray_trainer_stream2 import RayTrainerStream2
-        from recipe.darts.ray_trainer_stream3 import RayTrainerStream3
+        from recipe.darts.ray_trainer_darts import RayTrainerDarts
         from recipe.darts.ray_trainer_nooverlap import SyncRayTrainer
         from recipe.darts.ray_trainer_roll import RayTrainerRoll
         from recipe.darts.ray_trainer_dapo import RayDAPOTrainer
@@ -220,7 +220,7 @@ class TaskRunner:
         if config.algorithm.trainer_name == "basic":
             trainer_cls = SyncRayTrainer
         elif config.algorithm.trainer_name == "stream":
-            trainer_cls = RayTrainerStream3
+            trainer_cls = RayTrainerDarts
         elif config.algorithm.trainer_name == "roll":
             trainer_cls = RayTrainerRoll
         elif config.algorithm.trainer_name == "dapo":
