@@ -7,9 +7,9 @@
 Reinforcement Learning (RL) has become pivotal for improving model capabilities yet suffers from rollout efficiency bottlenecks due to the long-tail response length distribution.
 While existing works mitigate the impact of long tails via prompt-level tail scheduling, we focus on the root source of inefficiency: the distribution itself.
 Specifically, we characterize the long-tail distribution at a finer granularity, identifying intra-prompt long tails, and revealing that they frequently consist of ineffective verbosity.
-To address this, we propose a novel paradigm of \textit{active distribution shaping} to shape the rollout distribution towards conciseness and certainty, thereby fundamentally resolving tail-induced overheads.
-We achieve this through a \textit{distribution-aware trajectory sampling} mechanism, which selects trajectories from a redundant exploration space for each prompt, and an \textit{adaptive redundancy allocation} scheme to maximize both shaping effectiveness and system efficiency.
-Experiments demonstrate significant acceleration over state-of-the-art systems by up to 1.77$\times$ without compromising model performance.
+To address this, we propose a novel paradigm of active distribution shaping to shape the rollout distribution towards conciseness and certainty, thereby fundamentally resolving tail-induced overheads.
+We achieve this through a distribution-aware trajectory sampling mechanism, which selects trajectories from a redundant exploration space for each prompt, and an adaptive redundancy allocation scheme to maximize both shaping effectiveness and system efficiency.
+Experiments demonstrate significant acceleration over state-of-the-art systems by up to 1.77x without compromising model performance.
 
 ## Requirements
 
